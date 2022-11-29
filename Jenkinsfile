@@ -11,7 +11,7 @@ pipeline{
     stages{
         stage("Build"){
             steps{
-                echo "========Building Java project========"
+                echo "========Building Java project========++++++"
                 sh 'mvn -B -DskipTests clean package'
             }
             post{
