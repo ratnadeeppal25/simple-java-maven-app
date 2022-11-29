@@ -11,7 +11,7 @@ pipeline{
     stages{
         stage("Build"){
             steps{
-                echo "========Building Java project========++++++"
+                echo "========Building Java project========"
                 sh 'mvn -B -DskipTests clean package'
             }
             post{
@@ -41,6 +41,26 @@ pipeline{
                 }
                 failure{
                     echo "====++++Test execution failed++++===="
+                }
+       
+            }
+        }
+        stage("Sonarqube Analysis"){
+            steps{
+                echo "====++++executing Sonarqube Analysis++++===="
+                withSonarQubeEnv('SonarQube') {
+                sh 'mvn sonar:sonar'
+            }
+            }
+            post{
+                always{
+                    echo "====++++always++++===="
+                }
+                success{
+                    echo "====++++Sonarqube Analysis executed successfully++++===="
+                }
+                failure{
+                    echo "====++++Sonarqube Analysis execution failed++++===="
                 }
        
             }
